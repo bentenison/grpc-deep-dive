@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+package book;
+option go_package = ".";
+
+service BookService {
+  rpc ListBooks(ListBookRequest) returns (ListBookResponse);
+  rpc GetBook(GetBookRequest) returns (GetBookResponse);
+  rpc CreateBook(CreateBookRequest) returns (CreateBookResponse);
+}
+
+// message Type {
+// ! This should be defined elsewere
+// }
+message Book {
+    string id = 1;
+    string name = 2;
+    string author = 3;
+    google.protobuf.Timestamp createdAt = 4;
+}
+message ListBookRequest {
+}
+
+message ListBookResponse {
+  // The field name should match the noun "Type" in the method name.
+  // There will be a maximum number of items returned based on the page_size field in the request.
+  repeated Book books = 1;
+
+}
+
+message GetBookRequest {
+  // The field will contain name of the resource requested.
+  string id = 1;
+}
+message GetBookResponse {
+  // The field will contain name of the resource requested.
+  Book book = 1;
+}
+
+message CreateBookRequest {
+  // The parent resource name where the Type is to be created.
+   Book book = 1;
+}
+message CreateBookResponse{
+    string success = 1;
+}
+
